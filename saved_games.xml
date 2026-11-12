@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<games>
+    <game>
+        <id>1</id>
+        <rank>2</rank>
+        <name>test</name>
+        <date_completed>2026-11-12 15:24:04</date_completed>
+        <time_to_complete>00:20</time_to_complete>
+    </game>
+    <game>
+        <id>2</id>
+        <rank>4</rank>
+        <name>dsfdsfsdf</name>
+        <date_completed>2026-11-12 15:32:00</date_completed>
+        <time_to_complete>07:33</time_to_complete>
+    </game>
+    <game>
+        <id>3</id>
+        <rank>3</rank>
+        <name>cvxcvxvxcv</name>
+        <date_completed>2026-11-12 15:44:05</date_completed>
+        <time_to_complete>00:47</time_to_complete>
+        <Hints>28</Hints>
+    </game>
+    <game>
+        <id>4</id>
+        <rank>1</rank>
+        <name>dsfsdfdsf</name>
+        <date_completed>2026-11-12 15:46:49</date_completed>
+        <time_to_complete>00:14</time_to_complete>
+        <Hints>28</Hints>
+    </game>
+</games>

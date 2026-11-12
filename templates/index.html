@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Sudoku Game</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet"
+          href="/static/styles.css">
+</head>
+
+<body>
+
+    <h1>Sudoku Game</h1>
+
+    <!-- DARK MODE -->
+    <button id="themeToggle"
+            type="button"
+            aria-label="Toggle dark mode">
+
+        <i class="fa fa-sun-o"
+           aria-hidden="true"></i>
+
+    </button>
+
+
+    <main class="game-layout">
+
+        <!-- ====================== -->
+        <!-- LEFT SIDE -->
+        <!-- ====================== -->
+
+        <aside class="side-panel">
+
+            <!-- TIMER -->
+            <div class="timer-panel">
+
+                <div class="timer-title">
+                    TIME
+                </div>
+
+                <div id="timer">
+                    00:00
+                </div>
+
+            </div>
+
+
+            <!-- DIFFICULTY -->
+            <div class="difficulty-panel">
+
+                <label for="difficulty"
+                       class="side-title">
+
+                    DIFFICULTY
+
+                </label>
+
+                <select id="difficulty">
+
+                    <option value="easy">
+                        Easy
+                    </option>
+
+                    <option value="medium" selected>
+                        Normal
+                    </option>
+
+                    <option value="hard">
+                        Hard
+                    </option>
+
+                </select>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ====================== -->
+        <!-- CENTER - SUDOKU -->
+        <!-- ====================== -->
+
+        <section class="sudoku-area">
+
+            <div id="sudoku-board"></div>
+
+
+            <div class="controls">
+
+                <button id="new-game"
+                        type="button">
+
+                    New Game
+
+                </button>
+
+
+                <button id="check-solution"
+                        type="button">
+
+                    Check Solution
+
+                </button>
+
+
+                <div id="message"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================== -->
+        <!-- RIGHT SIDE -->
+        <!-- ====================== -->
+
+        <aside class="right-panel">
+
+            <button id="hintBtn"
+                    type="button">
+
+                💡 Hint
+
+            </button>
+
+
+            <div id="hintCount">
+                Hints: 0
+            </div>
+
+        </aside>
+
+    </main>
+    <section class="leaderboard">
+
+    <div class="leaderboard-title">
+        <div>
+            <h2>🏆 Leaderboard</h2>
+            <p>Fastest puzzle completion times</p>
+        </div>
+    </div>
+
+    <div class="leaderboard-table-wrapper">
+
+        <table id="leaderboardTable">
+
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Date Completed</th>
+                    <th>Time</th>
+                    <th>Hints</th>
+                </tr>
+            </thead>
+
+            <tbody id="leaderboardBody">
+              {% if games %}
+                {% for game in games %}
+
+                <tr>
+
+                    <td class="rank-cell">
+                        {{ game.rank }}
+                    </td>
+
+                    <td class="player-cell">
+                        {{ game.name }}
+                    </td>
+
+                    <td>
+                        {{ game.date_completed }}
+                    </td>
+
+                    <td class="time-cell">
+                        {{ game.time_to_complete }}
+                    </td>
+
+                    <td class="hints-cell">
+                        {{ game.hints }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+              {% else %}
+                <tr>
+                    <td colspan="4" class="empty-leaderboard">
+                        No completed games yet.
+                    </td>
+                </tr>
+              {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+    <script src="/static/main.js"></script>
+
+</body>
+
+</html>

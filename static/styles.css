@@ -1,0 +1,966 @@
+/* ========================================
+   COLORS
+======================================== */
+
+:root {
+    --background: #f4f7fb;
+    --card-background: #ffffff;
+
+    --text-color: #172033;
+    --secondary-text: #64748b;
+
+    --primary: #1976d2;
+    --primary-hover: #1565c0;
+
+    --border: #cbd5e1;
+    --strong-border: #334155;
+
+    --cell-background: #fafafa;
+    --prefilled-background: #e8edf3;
+
+    --shadow:
+        0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ========================================
+   DARK MODE
+======================================== */
+
+body.dark-mode {
+
+    --background: #121826;
+    --card-background: #1e293b;
+
+    --text-color: #f5f5f5;
+    --secondary-text: #cbd5e1;
+
+    --border: #475569;
+    --strong-border: #cbd5e1;
+
+    --cell-background: #253247;
+    --prefilled-background: #334155;
+}
+
+
+/* ========================================
+   GLOBAL
+======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+    padding: 30px 20px;
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    text-align: center;
+
+    background-color:
+        var(--background);
+
+    color:
+        var(--text-color);
+
+    transition:
+        background-color 0.3s,
+        color 0.3s;
+}
+
+
+h1 {
+
+    margin-top: 5px;
+    margin-bottom: 30px;
+
+    font-size: 36px;
+
+    color:
+        var(--text-color);
+}
+
+
+/* ========================================
+   DARK MODE BUTTON
+======================================== */
+
+#themeToggle {
+
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    width: 45px;
+    height: 45px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        var(--primary);
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    z-index: 1000;
+}
+
+
+#themeToggle:hover {
+
+    background:
+        var(--primary-hover);
+}
+
+
+/* ========================================
+   MAIN GAME LAYOUT
+======================================== */
+
+.game-layout {
+
+    width: 100%;
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        170px
+        auto
+        150px;
+
+    justify-content: center;
+
+    align-items: start;
+
+    gap: 30px;
+}
+
+
+/* ========================================
+   LEFT PANEL
+======================================== */
+
+.side-panel {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+/* ========================================
+   TIMER + DIFFICULTY CARDS
+======================================== */
+
+.timer-panel,
+.difficulty-panel {
+
+    width: 100%;
+
+    padding: 18px;
+
+    background:
+        var(--card-background);
+
+    border-radius: 12px;
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.timer-title,
+.side-title {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    color:
+        var(--secondary-text);
+}
+
+
+/* ========================================
+   TIMER
+======================================== */
+
+#timer {
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+    color:
+        var(--text-color);
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+/* ========================================
+   DIFFICULTY
+======================================== */
+
+#difficulty {
+
+    width: 100%;
+
+    padding: 9px 10px;
+
+    border:
+
+        1px solid
+        var(--border);
+
+    border-radius: 6px;
+
+    background:
+        var(--card-background);
+
+    color:
+        var(--text-color);
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    outline: none;
+}
+
+
+#difficulty:focus {
+
+    border-color:
+        var(--primary);
+}
+
+
+/* ========================================
+   SUDOKU AREA
+======================================== */
+
+.sudoku-area {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    min-width: 0;
+}
+
+
+/* ========================================
+   SUDOKU BOARD
+======================================== */
+
+#sudoku-board {
+
+    display: inline-block;
+
+    margin: 0 auto 25px;
+
+    border:
+
+        4px solid
+        var(--strong-border);
+
+    background:
+        var(--card-background);
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+/* ========================================
+   ROWS
+======================================== */
+
+.sudoku-row {
+
+    display: flex;
+}
+
+
+/* ========================================
+   CELLS
+======================================== */
+
+.sudoku-cell {
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    border:
+
+        1px solid
+        var(--border);
+
+    border-radius: 0;
+
+    outline: none;
+
+    text-align: center;
+
+    font-size: 20px;
+
+    font-weight: 500;
+
+    background:
+        var(--cell-background);
+
+    color:
+        var(--text-color);
+
+    transition:
+        background-color 0.2s;
+}
+
+
+/* Selected cell */
+
+.sudoku-cell:focus {
+
+    background:
+        #e0f7fa;
+
+    box-shadow:
+
+        inset 0 0 0 2px
+        var(--primary);
+}
+
+
+/* Dark selected cell */
+
+body.dark-mode
+.sudoku-cell:focus {
+
+    background:
+        #164e63;
+}
+
+
+/* Prefilled cell */
+
+.sudoku-cell.prefilled {
+
+    background:
+        var(--prefilled-background);
+
+    font-weight: bold;
+
+    color:
+        var(--text-color);
+}
+
+
+/* Incorrect answer */
+
+.sudoku-cell.incorrect {
+
+    background:
+        #ffcdd2;
+}
+
+
+/* Correct answer */
+
+.sudoku-cell.correct {
+
+    background:
+        #c8e6c9;
+}
+
+
+/* ========================================
+   SUDOKU 3x3 BORDERS
+======================================== */
+
+.sudoku-cell:nth-child(3),
+.sudoku-cell:nth-child(6) {
+
+    border-right:
+
+        3px solid
+        var(--strong-border);
+}
+
+
+.sudoku-row:nth-child(3)
+.sudoku-cell,
+
+.sudoku-row:nth-child(6)
+.sudoku-cell {
+
+    border-bottom:
+
+        3px solid
+        var(--strong-border);
+}
+
+
+/* ========================================
+   CONTROLS
+======================================== */
+
+.controls {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* ========================================
+   BUTTONS
+======================================== */
+
+button {
+
+    padding: 10px 18px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background:
+        var(--primary);
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s,
+        transform 0.15s;
+}
+
+
+button:hover {
+
+    background:
+        var(--primary-hover);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* ========================================
+   RIGHT / HINT PANEL
+======================================== */
+
+.right-panel {
+
+    width: 150px;
+
+    padding: 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    align-items: center;
+
+    background:
+        var(--card-background);
+
+    border-radius: 12px;
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+#hintBtn {
+
+    width: 100%;
+
+    background-color:
+        #f4b400;
+
+    color:
+        #302600;
+}
+
+
+#hintBtn:hover {
+
+    background-color:
+        #d9a000;
+}
+
+
+#hintCount {
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color:
+        var(--secondary-text);
+}
+
+
+/* ========================================
+   MESSAGE
+======================================== */
+
+#message {
+
+    width: 100%;
+
+    min-height: 22px;
+
+    margin-top: 5px;
+
+    font-size: 14px;
+
+    color: #d32f2f;
+}
+
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 800px) {
+
+    .game-layout {
+
+        grid-template-columns:
+            auto
+            140px;
+
+        gap: 20px;
+    }
+
+
+    .side-panel {
+
+        grid-column:
+            1 / -1;
+
+        width: 100%;
+
+        max-width: 420px;
+
+        margin: auto;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+
+    .sudoku-area {
+
+        grid-column: 1;
+    }
+
+
+    .right-panel {
+
+        grid-column: 2;
+    }
+
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+    body {
+
+        padding:
+
+            70px
+            10px
+            30px;
+    }
+
+
+    h1 {
+
+        font-size: 30px;
+    }
+
+
+    .game-layout {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 18px;
+    }
+
+
+    /* Timer + difficulty side by side */
+
+    .side-panel {
+
+        width: 100%;
+
+        max-width: 390px;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 12px;
+    }
+
+
+    /* Responsive cells */
+
+    .sudoku-cell {
+
+        width:
+            clamp(34px, 9vw, 42px);
+
+        height:
+            clamp(34px, 9vw, 42px);
+
+        font-size: 18px;
+    }
+
+
+    .right-panel {
+
+        width: 100%;
+
+        max-width: 390px;
+    }
+
+
+    #hintBtn {
+
+        width: 100%;
+    }
+
+
+    .controls {
+
+        width: 100%;
+
+        max-width: 390px;
+    }
+
+
+    .controls button {
+
+        flex: 1;
+
+        min-width: 140px;
+    }
+
+}
+
+
+/* ========================================
+   VERY SMALL PHONE
+======================================== */
+
+@media (max-width: 400px) {
+
+    .side-panel {
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .sudoku-cell {
+
+        width: 35px;
+        height: 35px;
+
+        font-size: 17px;
+    }
+
+}
+
+/* ========================================
+   LEADERBOARD
+======================================== */
+
+.leaderboard {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 50px auto 30px;
+    padding: 24px;
+
+    background: var(--card-background);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.08);
+
+    text-align: left;
+}
+
+
+/* HEADER */
+
+.leaderboard-title {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+
+.leaderboard-title h2 {
+    margin: 0;
+
+    font-size: 22px;
+
+    color: var(--text-color);
+}
+
+
+.leaderboard-title p {
+    margin: 5px 0 0;
+
+    font-size: 14px;
+
+    color: var(--secondary-text);
+}
+
+
+/* TABLE WRAPPER */
+
+.leaderboard-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+}
+
+
+/* TABLE */
+
+#leaderboardTable {
+    width: 100%;
+
+    min-width: 600px;
+
+    border-collapse: collapse;
+
+    background: var(--card-background);
+}
+
+
+/* COLUMN HEADERS */
+
+#leaderboardTable thead {
+    background: var(--background);
+}
+
+
+#leaderboardTable th {
+    padding: 14px 18px;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.7px;
+
+    color: var(--secondary-text);
+
+    border-bottom:
+        2px solid var(--border);
+}
+
+
+/* TABLE DATA */
+
+#leaderboardTable td {
+    padding: 15px 18px;
+
+    font-size: 14px;
+
+    color: var(--text-color);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+
+/* REMOVE LAST BORDER */
+
+#leaderboardTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ROW HOVER */
+
+#leaderboardTable tbody tr {
+    transition: background-color 0.2s;
+}
+
+
+#leaderboardTable tbody tr:hover {
+    background: var(--background);
+}
+
+
+/* RANK */
+
+.rank-cell {
+    width: 90px;
+
+    font-size: 16px !important;
+    font-weight: 700;
+}
+
+
+/* PLAYER */
+
+.player-cell {
+    font-weight: 600;
+}
+
+
+/* COMPLETION TIME */
+
+.time-cell {
+    font-weight: 700;
+
+    color: var(--primary) !important;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* NO DATA */
+
+.empty-leaderboard {
+    text-align: center !important;
+
+    padding: 35px !important;
+
+    color: var(--secondary-text) !important;
+}
+
+
+/* ========================================
+   TOP 3
+======================================== */
+
+.rank-1 {
+    background:
+        rgba(255, 215, 0, 0.08);
+}
+
+
+.rank-2 {
+    background:
+        rgba(192, 192, 192, 0.08);
+}
+
+
+.rank-3 {
+    background:
+        rgba(205, 127, 50, 0.08);
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+    .leaderboard {
+        margin-top: 30px;
+
+        padding: 16px;
+
+        border-radius: 10px;
+    }
+
+
+    .leaderboard-title h2 {
+        font-size: 19px;
+    }
+
+
+    .leaderboard-title p {
+        font-size: 13px;
+    }
+
+
+    #leaderboardTable th,
+    #leaderboardTable td {
+        padding: 12px 14px;
+    }
+
+}
