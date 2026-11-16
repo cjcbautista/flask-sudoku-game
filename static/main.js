@@ -610,44 +610,24 @@ difficultySelect.addEventListener("change", function () {
 
 
 async function getHint() {
+    const response = await fetch("/hint");
+    const data = await response.json();
 
-    try {
+    if (!data.success) {
+        alert(data.message);
+        return;
+    }
 
-        const response = await fetch("/hint", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                hint: (parseInt(sessionStorage.getItem("hintCount")) || 0)
-            })
-        });
+    const cell = document.querySelector(
+        `.sudoku-cell[data-row="${data.row}"][data-col="${data.col}"]`
+    );
 
-        const data = await response.json();
-        if (!data.success) {
-            alert(data.message);
-            return;
-        }
-
-        const cell = document.querySelector(
-            `.sudoku-cell[data-row="${data.row}"][data-col="${data.col}"]`
-        );
-
-        if (cell) {
-            cell.value = data.value;
-
-            // Different color so player knows it's a hint
-            cell.style.backgroundColor = "#fff3cd";
-            let hintCount = parseInt(sessionStorage.getItem("hintCount")) || 0;
-            sessionStorage.setItem("hintCount", hintCount += 1);
-            document.getElementById("hintCount").innerText = `Hints: ${hintCount}`;
-        }
-
-    } catch (error) {
-        console.error("Hint error:", error);
+    if (cell) {
+        cell.value = data.value;
+        cell.classList.remove("incorrect");
+        cell.classList.add("hint-cell");
     }
 }
-
 const hintBtn = document.getElementById("hintBtn");
 
 hintBtn.addEventListener("click", function () {

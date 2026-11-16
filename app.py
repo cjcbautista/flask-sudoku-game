@@ -5,6 +5,7 @@ import random
 from flask import Flask, render_template, request, jsonify, session
 app = Flask(__name__)
 import os
+import copy
 
 app.secret_key = os.environ.get(
     "SECRET_KEY",
@@ -39,6 +40,7 @@ def new_game():
 
     puzzle, solution = sudoku_logic.generate_puzzle(empty_cells)
     # Save game into Flask session
+    session["original_puzzle"] = copy.deepcopy(puzzle)
     session["puzzle"] = puzzle
     session["solution"] = solution
     session["difficulty"] = difficulty
@@ -125,52 +127,49 @@ def check_cell():
     })
 
 
-@app.route("/hint", methods=["POST"])
+@app.route("/hint", methods=["GET"])
 def hint():
-
-    data = request.get_json()
-
     puzzle = session.get("puzzle")
     solution = session.get("solution")
-    hint = data.get("hint", 0)
+    original_puzzle = session.get("original_puzzle")
 
-    if hint >= 5:
-        return jsonify({
-            "success": False,
-            "message": "Maximum number of hints reached."
-        })
-
-    if not puzzle or not solution:
+    if not puzzle or not solution or not original_puzzle:
         return jsonify({
             "success": False,
             "message": "No active game."
-        })
+        }), 400
 
-    empty_cells = []
+    valid_cells = []
 
     for row in range(9):
         for col in range(9):
 
-            if puzzle[row][col] == 0:
-                empty_cells.append((row, col))
+            # Only cells that were originally editable
+            if original_puzzle[row][col] == 0:
 
-    if not empty_cells:
+                # Empty or incorrect cell
+                if puzzle[row][col] == 0 or puzzle[row][col] != solution[row][col]:
+                    valid_cells.append((row, col))
+
+    if not valid_cells:
         return jsonify({
             "success": False,
-            "message": "No empty cells available."
+            "message": "No hint available."
         })
 
-    row, col = random.choice(empty_cells)
+    row, col = random.choice(valid_cells)
+    value = solution[row][col]
 
-    puzzle[row][col] = solution[row][col]
-
+    # Update current game state
+    puzzle[row][col] = value
     session["puzzle"] = puzzle
+    session.modified = True
 
     return jsonify({
         "success": True,
         "row": row,
         "col": col,
-        "value": solution[row][col]
+        "value": value
     })
 
 
